@@ -1,0 +1,39 @@
+
+name: Extract game files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP
+        run: |
+          python3 - <<'PY'
+          import glob, zipfile, os
+          files = glob.glob("*.zip")
+          if not files:
+              raise SystemExit("No ZIP file found")
+          with zipfile.ZipFile(files[0]) as z:
+              for item in z.infolist():
+                  path = os.path.normpath(item.filename)
+                  if path.startswith("..") or os.path.isabs(path):
+                      raise SystemExit("Unsafe ZIP entry")
+              z.extractall(".")
+          PY
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Extract game files"
+          git push
+          
