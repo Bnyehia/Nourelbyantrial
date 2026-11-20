@@ -1,0 +1,7 @@
+event,text_ar,source,status
+start,"يا يونس، يلا نلعب",device_TTS,temporary
+correct,"برافو يا يونس",device_TTS,temporary
+retry,"ولا يهمك يا نوشّا، جرب تاني",device_TTS,temporary
+level_complete,"مبروك يا يونس، كسبت نجمة جديدة",device_TTS,temporary
+listen_question,"اسمع يا نوشّا واختار الحرف",device_TTS,temporary
+trace,"ارسم الحرف بإصبعك يا نوشّا",device_TTS,temporary
